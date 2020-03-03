@@ -57,6 +57,7 @@ for (var i = 0; i < products.length; i++) {
 
 //(4) render 3 random proudcts
 var leftProduct, middleProduct, rightProduct;
+var outProd =[];
 function render() {
     leftProduct = Prouduct.all[randomNumber(0, Prouduct.all.length - 1)];
     middleProduct = Prouduct.all[randomNumber(0, Prouduct.all.length - 1)];
@@ -72,11 +73,14 @@ function render() {
         rightImg.setAttribute('alt', rightProduct.products);
         rightImg.setAttribute('title', rightProduct.products);
     }
+    outProd.push(leftProduct , middleProduct , rightProduct);
+    console.log(outProd);
 
 
 
 }
 render();
+
 
 //(5) add the event listener to render new products
 imgSection.addEventListener('click', handleClickOnProuduct);
@@ -102,13 +106,29 @@ function handleClickOnProuduct(event) {
     } else {
 
         console.log('more than 25 clicks');
+        alert("more than 25 clicks");
         imgSection.removeEventListener('click', handleClickOnProuduct);
+        renderChart();
         render2();
     }
 
     // render();
 
 }
+
+// duplicate soluiton.......
+function duplex (){
+    var select = [];
+    for (var i=0 ;i<2;i++){
+        select.push(leftProduct , middleProduct , rightProduct);
+    }
+    render();
+    console.log(select);
+    // if ()
+
+}
+
+
 
 //  the results of products 
 function render2() {
@@ -127,8 +147,45 @@ function render2() {
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+//  lables array...
+var names = [];
+for (var i = 0; i < Prouduct.all.length; i++) {
+    names.push(Prouduct.all[i].products);
+}
 
 
-// while (leftProduct !== middleProduct && middleProduct !== rightProduct && leftProduct !== rightProduct) {
 
-// }
+// my Chart .&& data arry .................
+function renderChart() {
+    var numOfClick = [];
+    for (var i = 0; i < Prouduct.all.length; i++) {
+        console.log(Prouduct.all[i].clicks);
+        numOfClick.push(Prouduct.all[i].clicks);
+    }
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: names,
+            datasets: [{
+                label: '# of Click',
+                data: numOfClick,
+                backgroundColor:
+                    'rgba(255, 99, 132, 0.2)',
+                borderColor:
+                    'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+}
