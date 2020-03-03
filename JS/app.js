@@ -56,25 +56,39 @@ for (var i = 0; i < products.length; i++) {
 }
 
 //(4) render 3 random proudcts
-var leftProduct, middleProduct, rightProduct;
-var outProd =[];
+// var leftProduct, middleProduct, rightProduct;
+var outProd = [];
+// var leftProduct, middleProduct, rightProduct;
+
 function render() {
     leftProduct = Prouduct.all[randomNumber(0, Prouduct.all.length - 1)];
     middleProduct = Prouduct.all[randomNumber(0, Prouduct.all.length - 1)];
     rightProduct = Prouduct.all[randomNumber(0, Prouduct.all.length - 1)];
-    if (leftProduct !== middleProduct && middleProduct !== rightProduct && leftProduct !== rightProduct) {
-        leftImg.setAttribute('src', leftProduct.imagePath);
-        leftImg.setAttribute('alt', leftProduct.products);
-        leftImg.setAttribute('title', leftProduct.products);
-        middleImg.setAttribute('src', middleProduct.imagePath);
-        middleImg.setAttribute('alt', middleProduct.products);
-        middleImg.setAttribute('title', middleProduct.products);
-        rightImg.setAttribute('src', rightProduct.imagePath);
-        rightImg.setAttribute('alt', rightProduct.products);
-        rightImg.setAttribute('title', rightProduct.products);
+    outProd.push(leftProduct,middleProduct,rightProduct);
+    while ((leftProduct === middleProduct) || (middleProduct === rightProduct) || (leftProduct === rightProduct) || (outProd.includes(leftProduct)) || (outProd.includes(middleProduct)) || (outProd.includes(rightProduct))) {
+        leftProduct = Prouduct.all[randomNumber(0, Prouduct.all.length - 1)];
+        middleProduct = Prouduct.all[randomNumber(0, Prouduct.all.length - 1)];
+        rightProduct = Prouduct.all[randomNumber(0, Prouduct.all.length - 1)];
     }
-    outProd.push(leftProduct , middleProduct , rightProduct);
+    outProd.push(leftProduct);
+    outProd.push(middleProduct);
+    outProd.push(rightProduct);
+    while(outProd.length>3){
+        outProd.shift();
+    }
+    // render();
     console.log(outProd);
+    leftImg.setAttribute('src', leftProduct.imagePath);
+    leftImg.setAttribute('alt', leftProduct.products);
+    leftImg.setAttribute('title', leftProduct.products);
+    middleImg.setAttribute('src', middleProduct.imagePath);
+    middleImg.setAttribute('alt', middleProduct.products);
+    middleImg.setAttribute('title', middleProduct.products);
+    rightImg.setAttribute('src', rightProduct.imagePath);
+    rightImg.setAttribute('alt', rightProduct.products);
+    rightImg.setAttribute('title', rightProduct.products);
+    // outProd.push(leftProduct, middleProduct, rightProduct);
+    // console.log(outProd);
 
 
 
@@ -117,10 +131,10 @@ function handleClickOnProuduct(event) {
 }
 
 // duplicate soluiton.......
-function duplex (){
+function duplex() {
     var select = [];
-    for (var i=0 ;i<2;i++){
-        select.push(leftProduct , middleProduct , rightProduct);
+    for (var i = 0; i < 2; i++) {
+        select.push(leftProduct, middleProduct, rightProduct);
     }
     render();
     console.log(select);
@@ -158,9 +172,11 @@ for (var i = 0; i < Prouduct.all.length; i++) {
 // my Chart .&& data arry .................
 function renderChart() {
     var numOfClick = [];
+    var numOfViwes = [];
     for (var i = 0; i < Prouduct.all.length; i++) {
         console.log(Prouduct.all[i].clicks);
         numOfClick.push(Prouduct.all[i].clicks);
+        numOfViwes.push(Prouduct.all[i].views);
     }
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -168,6 +184,15 @@ function renderChart() {
         data: {
             labels: names,
             datasets: [{
+                label: '# of Viwes',
+                data: numOfViwes,
+                backgroundColor:
+                    'rgba(150, 99, 132, 0.2)',
+                borderColor:
+                    'rgba(48, 99, 95, 1)',
+                borderWidth: 1
+            },
+            {
                 label: '# of Click',
                 data: numOfClick,
                 backgroundColor:
@@ -189,3 +214,5 @@ function renderChart() {
     });
 
 }
+
+
