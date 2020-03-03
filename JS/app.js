@@ -50,6 +50,26 @@ function Prouduct(products) {
 }
 Prouduct.all = [];
 
+
+//  Upate prouducts ..............
+function updateProuducts (){
+    var productsStrings = JSON.stringify(Prouduct.all);
+    localStorage.setItem('productOutPut',productsStrings);
+}
+
+// get all products ..............
+function getProducts(){
+    var productsStrings =localStorage.getItem('productOutPut');
+    if(productsStrings){
+        Prouduct.all = JSON.parse(productsStrings);
+        render();
+        render2();
+        renderChart();
+        
+    }
+}
+
+
 //(3_2) instantiate objects for all the products one shot
 for (var i = 0; i < products.length; i++) {
     new Prouduct(products[i]);
@@ -113,6 +133,7 @@ function handleClickOnProuduct(event) {
             leftProduct.views++;
             middleProduct.views++;
             rightProduct.views++;
+            updateProuducts();
             render();
         }
 
@@ -131,16 +152,16 @@ function handleClickOnProuduct(event) {
 }
 
 // duplicate soluiton.......
-function duplex() {
-    var select = [];
-    for (var i = 0; i < 2; i++) {
-        select.push(leftProduct, middleProduct, rightProduct);
-    }
-    render();
-    console.log(select);
-    // if ()
+// function duplex() {
+//     var select = [];
+//     for (var i = 0; i < 2; i++) {
+//         select.push(leftProduct, middleProduct, rightProduct);
+//     }
+//     render();
+//     console.log(select);
+//     // if ()
 
-}
+// }
 
 
 
@@ -214,5 +235,6 @@ function renderChart() {
     });
 
 }
+getProducts();
 
 
