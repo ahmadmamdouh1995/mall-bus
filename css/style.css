@@ -22,6 +22,9 @@ header {
     margin: 0 auto;
     text-align: center;
   }
+  main{
+      overflow: hidden;
+  }
 main img {
     width: 250px;
     height: 250px;
