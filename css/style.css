@@ -37,7 +37,7 @@ main img {
   }
   #results{
       border-radius: 10px;
-      border: 10px solid rgb(241, 52, 52) ;
+      border: 10px solid rgb(206, 147, 147) ;
 
   }
   p{
@@ -55,6 +55,6 @@ main img {
   footer{
       text-align: center;
       font-size: xx-large;
-      border: solid 15px rgb(238, 122, 13);
+      border: solid 15px rgb(49, 18, 99);
       width: 100%;
   }
